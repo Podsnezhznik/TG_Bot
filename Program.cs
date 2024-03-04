@@ -1,7 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
-var cfg = new ConfigurationBuilder()
-    .AddJsonFile("appsettings.json", false, true)
-    .Build();
+using IHost host = Host.CreateApplicationBuilder(args).Build();
 
-Console.WriteLine(cfg["Secret"]);
+var cfg = host.Services.GetService<IConfiguration>();
+var settings = cfg.GetRequiredSection(nameof(DbSettings)).Get<DbSettings>();
+Console.WriteLine(settings.ConnectionString);
+
+await host.RunAsync();
