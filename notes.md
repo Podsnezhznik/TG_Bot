@@ -11,8 +11,14 @@
 * git remote add origin https://gitverse.ru/sc/atrusov/tgbot2024.git
 * git branch -M master
 * git push -u origin master
+* dotnet add package Microsoft.Extensions.Configuration
+* dotnet add package Microsoft.Extensions.Hosting
+
+
 
 
 # ссылки
 
 * https://github.com/TelegramBots/Telegram.Bot
+* https://www.connectionstrings.com/
+* https://learn.microsoft.com/ru-ru/dotnet/core/extensions/configuration
