@@ -7,6 +7,9 @@
 * git commit -m "init"
 * dotnet add package System.Data.SQLite
 * dotnet add package Telegram.Bot
+* git remote add origin https://gitverse.ru/sc/atrusov/tgbot2024.git
+* git branch -M master
+* git push -u origin master
 
 
 
