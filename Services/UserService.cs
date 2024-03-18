@@ -1,6 +1,9 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Data.Common;
+using System.Data.SQLite;
+using Dapper;
 
 public class UserService
 {
@@ -8,6 +11,8 @@ public class UserService
     private readonly ILogger<UserService> _logger;
 
     private DbSettings _dbSettings => _dbSettingsMonitor.CurrentValue;
+
+    private DbConnection GetConn() => new SQLiteConnection(_dbSettings.ConnectionString);
 
     public UserService
     (
@@ -23,8 +28,14 @@ public class UserService
 
     public int Create (UserCreateModel model)
     {
-        //...
-        return 0;
+        _logger.LogInformation("подключаемся к БД...");
+        using var db = GetConn();
+        _logger.LogInformation("подключение успешно!");
+        var sql = "INSERT INTO User (Login, Pass) VALUES(@Login, @Pass); SELECT last_insert_rowid()";
+        _logger.LogInformation("добавляем пользователя...");
+        var id = db.Query<int>(sql, model).FirstOrDefault();
+        _logger.LogInformation($"успешно создан пользователь с id={id}");
+        return id;
     }
 
     #endregion
